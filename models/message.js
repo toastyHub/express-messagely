@@ -29,12 +29,12 @@ class Message {
   /** Update read_at for message */
 
   static async markRead(id) {
-    const result = await db.query(
-        `UPDATE messages
-           SET read_at = current_timestamp
-           WHERE id = $1
-           RETURNING id, read_at`,
-        [id]);
+    const result = await db.query(`
+    UPDATE messages
+    SET read_at = current_timestamp
+    WHERE id = $1
+    RETURNING id, read_at`,
+    [id]);
 
     if (!result.rows[0]) {
       throw new ExpressError(`No such message: ${id}`, 404);
